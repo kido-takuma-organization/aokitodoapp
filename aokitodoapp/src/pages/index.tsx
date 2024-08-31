@@ -1,34 +1,28 @@
-import { useState, useEffect } from 'react';
-import TaskCard from '../components/TaskCard';
-import { setReminder } from '../utils/reminder';
+// src/pages/index.tsx
+import React, { useState } from 'react';
+import TodoForm from '../components/TodoForm';
+import { Todo } from '../types/types';
 
-const tasks = [
-  { id: '1', name: 'Buy groceries', dueDate: '2024-09-10', reminderDays: 1 },
-  { id: '2', name: 'Finish project report', dueDate: '2024-09-15', reminderDays: 3 },
-  // 他のタスクを追加
-];
+const HomePage: React.FC = () => {
+  const [todos, setTodos] = useState<Todo[]>([]);
 
-const Home = () => {
-  const [taskList, setTaskList] = useState(
-    tasks.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())
-  );
-
-  useEffect(() => {
-    taskList.forEach(task => {
-      setReminder(task.dueDate, task.reminderDays);
-    });
-  }, [taskList]);
+  const addTodo = (todo: Todo) => {
+    setTodos([...todos, todo]);
+  };
 
   return (
-    <div>
-      <h1 className="text-4xl font-bold">ToDo List</h1>
-      <div className="mt-4">
-        {taskList.map((task) => (
-          <TaskCard key={task.id} task={task} />
+    <main className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Todo List</h1>
+      <TodoForm addTodo={addTodo} />
+      <ul className="mt-4 space-y-2">
+        {todos.map((todo) => (
+          <li key={todo.id} className="p-2 border border-gray-300 rounded">
+            {todo.title}
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </main>
   );
-}
+};
 
-export default Home;
+export default HomePage;
