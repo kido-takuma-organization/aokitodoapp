@@ -1,0 +1,12 @@
+// .eslintrc.json
+{
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    // 追加のルールをここに設定
+  }
+}
